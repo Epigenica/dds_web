@@ -224,8 +224,6 @@ to solve this, look at the following steps:
 
 ### How did you install the CLI?
 
-- From PyPi, with the instructions found [here](https://epigenica.github.io/dds_cli/installation_epigenica/#install-from-pypi).
-  - Please download the executable, following the instructions, and try running the same command again (but with the executable).
 - I downloaded the executable as instructed [here](https://epigenica.github.io/dds_cli/installation_epigenica/#install-via-the-executable).
   - Inform Epigenica support.
 
@@ -414,7 +412,7 @@ Run the following command:
 ## R. Windows: DDS freezes after message
 
 Ask them to follow the corresponding User section of this document. If they have done that already and it does not help,
-there's nothing we can do. Usually it works if they use the executable instead of the CLI installed via PyPi.
+there's nothing we can do.
 
 ## S. The download is interrupted
 
