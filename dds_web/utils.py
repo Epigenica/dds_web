@@ -385,7 +385,9 @@ def send_reset_email(email_row, token):
     msg.attach(
         "epigenica_logo_light_bg.png",
         "image/png",
-        open(os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb").read(),
+        open(
+            os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb"
+        ).read(),
         "inline",
         headers=[
             ["Content-ID", "<Logo>"],
@@ -410,7 +412,9 @@ def send_project_access_reset_email(email_row, email, token):
     msg.attach(
         "epigenica_logo_light_bg.png",
         "image/png",
-        open(os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb").read(),
+        open(
+            os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb"
+        ).read(),
         "inline",
         headers=[
             ["Content-ID", "<Logo>"],
@@ -514,7 +518,9 @@ def send_motd_to_user_list(users_to_send, subject, body, html):
                 "epigenica_logo_light_bg.png",
                 "image/png",
                 open(
-                    os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"),
+                    os.path.join(
+                        flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"
+                    ),
                     "rb",
                 ).read(),
                 "inline",
@@ -537,7 +543,9 @@ def create_one_time_password_email(user, hotp_value):
     msg.attach(
         "epigenica_logo_light_bg.png",
         "image/png",
-        open(os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb").read(),
+        open(
+            os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb"
+        ).read(),
         "inline",
         headers=[
             ["Content-ID", "<Logo>"],

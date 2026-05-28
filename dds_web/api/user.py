@@ -465,7 +465,8 @@ class AddUser(flask_restful.Resource):
             "epigenica_logo_light_bg.png",
             "image/png",
             open(
-                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb"
+                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"),
+                "rb",
             ).read(),
             "inline",
             headers=[
@@ -595,7 +596,8 @@ class DeleteUserSelf(flask_restful.Resource):
             "epigenica_logo_light_bg.png",
             "image/png",
             open(
-                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb"
+                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"),
+                "rb",
             ).read(),
             "inline",
             headers=[
@@ -1151,7 +1153,8 @@ class RequestTOTPActivation(flask_restful.Resource):
             "epigenica_logo_light_bg.png",
             "image/png",
             open(
-                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb"
+                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"),
+                "rb",
             ).read(),
             "inline",
             headers=[
@@ -1216,7 +1219,8 @@ class RequestHOTPActivation(flask_restful.Resource):
             "epigenica_logo_light_bg.png",
             "image/png",
             open(
-                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"), "rb"
+                os.path.join(flask.current_app.static_folder, "img/epigenica_logo_light_bg.png"),
+                "rb",
             ).read(),
             "inline",
             headers=[
