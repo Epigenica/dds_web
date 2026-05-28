@@ -205,17 +205,17 @@ The output from the DDS could look something like this:
 
 ```
 PS Z:\> dds auth login
-dds : ︵
+dds : (
 At line:1 char:1
 + dds auth login
 + ~~~~~~~~~~~~~~
-+ CategoryInfo : NotSpecified: ( ︵ :String) [], RemoteException
++ CategoryInfo : NotSpecified: ( ( :String) [], RemoteException
 + FullyQualifiedErrorId : NativeCommandError
-︵ ( ) ︵
+( ( ) (
 ( ) ) ( ( ) Epigenica Data Delivery System
-︶ ( ) ) ( https://dds.epigenica.se/
-︶ ( ) Version 2.1.1
-︶
+) ( ) ) ( https://dds.epigenica.se/
+) ( ) Version 2.1.1
+)
 
 INFO Attempting to create the session token
 ```
