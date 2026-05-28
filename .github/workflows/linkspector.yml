@@ -1,4 +1,4 @@
-# Linkspector: Verify links in MD files
+# Check links in Markdown files
 ---
 name: Linkspector
 on:
@@ -10,9 +10,6 @@ on:
     paths: *markdown
   schedule:
     - cron: "0 1 * * *" # every day at 1am
-permissions:
-  pull-requests: write
-  checks: write
 jobs:
   check-links:
     name: runner / linkspector
@@ -22,11 +19,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Install Chrome for puppeteer
-        run: npx puppeteer@latest browsers install chrome
-      - name: Run linkspector
-        uses: umbrelladocs/action-linkspector@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-check
-          filter_mode: file
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check
+      - name: Check links in Markdown files
+        run: |
+          find . -name "*.md" \
+            -not -path "./.git/*" \
+            -not -path "./node_modules/*" \
+            | xargs -I{} markdown-link-check --quiet {}

@@ -76,9 +76,7 @@ If you cannot find the email, contact Epigenica support at [nima.rafati@epigenic
 
 ## F. CLI Documentation not accessible
 
-You can download the CLI documentation as a PDF.
-Click [here](https://github.com/Epigenica/dds_cli/releases/latest/download/dds_cli_user_manual.pdf). The
-download should start automatically. Notify Epigenica support that the documentation page is down so that we can look
+You can access the CLI documentation online at [https://epigenica.github.io/dds_cli/](https://epigenica.github.io/dds_cli/). Notify Epigenica support that the documentation page is down so that we can look
 into it.
 
 ## G. Long error message (traceback)
@@ -301,7 +299,7 @@ the email is correct and it's not an email address connected to the KI spam filt
 
 ## F. CLI Documentation not accessible
 
-1. Notify the users that they can download the CLI documentation as a PDF from [here](https://github.com/Epigenica/dds_cli/releases/latest/download/dds_cli_user_manual.pdf)
+1. Notify the users that they can access the CLI documentation at [https://epigenica.github.io/dds_cli/](https://epigenica.github.io/dds_cli/)
 2. Investigate the issue, including whether it could be infrastructure-related.
 
 ## G. Long error message (traceback)
