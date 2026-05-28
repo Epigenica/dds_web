@@ -1,0 +1,429 @@
+---
+title: "Data Delivery System"
+subtitle: "Troubleshooting"
+toc: true
+geometry: "left=1cm, right=1cm, top=2cm, bottom=2cm"
+fontsize: 12pt
+colorlinks: true
+header-includes:
+  # Next 2 lines set the font to Lato
+  - \usepackage{lato}
+  - \renewcommand{\familydefault}{\sfdefault}
+  # Next 3 lines set the header to include the date
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \rhead{30-Jul-2024}
+---
+
+# Users: Unit Admin/Personnel/Researchers
+
+## A. Invitation link invalid
+
+Did you receive the invitation email more than 7 days ago?
+
+- Yes: An invitation is only valid for 7 days. Contact the Epigenica unit that sent the original invitation and ask them to invite you again.
+- No: Something else has gone wrong. Contact the Epigenica unit that sent the original invitation and ask them to:
+  1. Remove the invitation with dds user delete --is-invite
+  2. Invite you again
+  3. Inform Epigenica support of the issue.
+
+## B. Too many authentication requests in one hour
+
+If this message is displayed in the web interface or CLI, the user has attempted to log in or logged in and out more
+than 10 times within an hour. Please wait an hour and try again.
+
+## C. Web: Invalid username or password
+
+### 1. Are you sure you are using the correct username?
+
+- Yes: Move on to step 2
+- No: It's currently not possible to reset/change a password. There are three options depending on your DDS account role:
+  - Unit Admin or Unit Personnel:
+    - Ask a colleague to list the users within your unit (dds user ls) and check the table for the row with your name.
+    - Verify that the username matches the one you are using.
+  - Researcher: Contact the Epigenica unit that invited you to the DDS.
+    - Question for the Unit Admins / Personnel: Is the account connected to a project within the DDS?
+      - Yes: A Unit Admin or Unit Personnel role can list the researchers in a specific project: `dds ls --project --users`. They can then check the table for the user and find the correct username.
+      - No: The Unit Admin or Personnel should contact [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+
+### 2. Are you sure you are using the correct password?
+
+- Yes: Notify Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+- No: Try requesting a password reset in the web interface.
+
+- IMPORTANT: If you have access to any projects before the password reset, notify an Unit Admin or Unit Personnel
+  immediately that they need to run the following command:
+  `dds project access fix`
+
+The user running this command needs to have access to the projects in question. This can be seen in the "Access" column
+when a user does dds ls to list the projects.
+
+## D. CLI: Failed to authenticate user: Missing or incorrect credentials
+
+Follow the same steps as in [C](#c.-web-invalid-username-or-password) above.
+
+## E. Not receiving emails
+
+KI seems to have a spam filter which makes receiving emails very slow in some cases. The email should show up at some
+point, but it may take some time.
+
+If you have an email that you are certain does not go through the KI spam filter:
+
+- Verify that you are checking the correct email address
+- Check the junk folder
+
+If you cannot find the email, contact Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+
+## F. CLI Documentation not accessible
+
+You can download the CLI documentation as a PDF.
+Click [here](https://github.com/Epigenica/dds_cli/releases/latest/download/dds_cli_user_manual.pdf). The
+download should start automatically. Notify Epigenica support that the documentation page is down so that we can look
+into it.
+
+## G. Long error message (traceback)
+
+If you get a long error message after running the CLI:
+
+- Unit Personnel / Admins: Report this to [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+- Researchers: Report this to the Epigenica unit delivering the data.
+
+Include the error message in the email. If the error is related to the DDS, an understandable message should always be
+displayed and it's therefore important that we get information so that we can change it.
+
+## H. Token expires during delivery
+
+Unfortunately we cannot do anything about this at this time. Remember to authenticate yourself before every large
+delivery. Re-authenticate yourself and then upload or download again. We will look into this issue if and when it arises.
+
+## I. Windows OS: Warning message "Storing the login information locally - please ensure no one else can access the file at …"
+
+Since the token file permissions check does not work on Windows OS, we are warning the users to be extra cautious in
+keeping this file secure. The dds client should be fully functional despite this warning.
+
+## J. Permission denied (authentication token) when using the DDS on a func account or similar
+
+The default setting is that the authenticated token generated by `dds auth login` has permission 600. This means read
+and write permissions for the specific unix user that is running the command.
+
+Running the dds auth login command with the option `--allow-group` will allow users from the same unix group to use the
+resulting token file. However, keep the following in mind:
+
+- The permissions of tokens cannot be changed after the tokens are established. If you began an authenticated session
+  without the use of the `--allow-group` option, but want to use it in a new session, use `dds auth logout` to end the
+  current session. Then use the `--allow-group` option and start a new session. This also applies to the reverse.
+- Not recommended for users with role Researcher, use with care.
+
+## K. QuotaExceeded
+
+The error could look something like this:
+
+```
+raise error_class(parsed_response, operation_name)
+
+         botocore.exceptions.ClientError: An error occurred (QuotaExceeded) when calling the UploadPart operation: Unknown
+
+```
+
+This indicates that the cloud storage location has a specific limit for your unit and that it has been exceeded.
+Contact Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se), inform them of the error (remember to include the full error
+message) and tell them the size of the data you are attempting to upload.
+
+## L. Unrecoverable key error
+
+The most likely reason for a key related error is that you do not have access to the project you are trying to access.
+If you get an error message containing something similar to "Unrecoverable key error", please go through the following
+steps:
+
+### 1. Run `dds ls`
+
+- Find the row of the project you were trying to access or use
+- Check the "Access" column for that row - does it contain a red cross or a green check mark?
+  - Green check: You have access to the project. This is not the issue.
+    - Does the current project status allow for the action you are trying to perform? Please look at the technical
+      overview and documentation. These are linked at the start of this document.
+      - Yes: Go to step 2.
+      - No: This is most likely the issue. Make sure the project status allows for the current action.
+        Please report the error message, what you were trying to do, the exact command, what steps you have performed
+        and any other information you may have, and we will look into this.
+  - Red cross: You do not have access to the project. Important note: If no one else has access to the project,
+    please note that Epigenica support cannot help you. As Super Admins in the DDS, we do not have access to any of your
+    data and we cannot restore your access. Please read the technical overview, the link is displayed at
+    dds.epigenica.se and also when running the CLI commands.
+    - Researcher: You need to contact all Epigenica units responsible for the projects you are involved in in the DDS.
+      They need to run `dds project access fix` for you. Try again after that is done.
+    - Unit Admin / Personnel: You need to contact a colleague with access to the projects you are trying to use.
+      They need to run `dds project access fix` for you. Try again after that is done.
+
+### 2. If you have checked the project status, the project access, the access is fixed, or you have not been able to identify the issue, please contact Epigenica support and include the full error message, the exact command you are running.
+
+## M. ERROR: Internal Server Error
+
+Contact [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se) and provide the information listed [here](https://dds.epigenica.se/trouble).
+
+## N. TooManyBuckets
+
+Safespring has a maximum number of buckets per unit, however this number is set quite high and therefore this should
+not happen. If it does happen, contact Epigenica support and we will fix this. You can also check the active projects
+and see if there is one that is an active project that can be archived, for example. Be careful with this and
+do not delete/archive (including abort) projects which you are not 100% sure that they are ready to be deleted/archived.
+This is not reversible.
+
+## O. Errors occurred during upload
+
+When running `dds data put`, if there are issues, the following is a possible output:
+
+```
+Errors occurred during upload.
+
+If you wish to retry the upload, re-run the `dds data put` command again, specifying the same options as you did now. To also overwrite the files that were uploaded, also add the `--overwrite` flag at the end of the command.
+
+See /code/DataDelivery_2022-06-30_14-17-18/logs/dds_failed_delivery.json for more information.
+```
+
+Inform Epigenica support of the issue.
+
+## P. Not possible to change project status (Deadlock)
+
+A while back, someone commented that they were having issues with changing the status of a project. It turned out that
+the status had actually been changed, so before contacting Epigenica support, check the project status and see if it has
+changed despite the error.
+
+## Q. Lost access to 2FA Authenticator App
+
+If you have configured the Two Factor Authentication of your DDS account to use an authenticator app, but you have
+lost access to it (e.g. due to a broken or lost device), Epigenica support can deactivate the configuration in order to
+let you authenticate using the default email option. After this you can choose to activate the authenticator app method
+again.
+
+Please contact Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se) and ask for a reset of the 2FA method; complement the request with the username
+and email address of the affected account.
+
+## R. Windows: DDS freezes after message
+
+The output from the DDS could look something like this:
+
+```
+PS Z:\> dds auth login
+dds : ︵
+At line:1 char:1
++ dds auth login
++ ~~~~~~~~~~~~~~
++ CategoryInfo : NotSpecified: ( ︵ :String) [], RemoteException
++ FullyQualifiedErrorId : NativeCommandError
+︵ ( ) ︵
+( ) ) ( ( ) Epigenica Data Delivery System
+︶ ( ) ) ( https://dds.epigenica.se/
+︶ ( ) Version 2.1.1
+︶
+
+INFO Attempting to create the session token
+```
+
+Unfortunately this seems to have something to do with the Windows command prompt and the encoding (or logging), and not
+the DDS. We have attempted to reproduce the issue in both the Command Prompt and Powershell without success. To attempt
+to solve this, look at the following steps:
+
+### How did you install the CLI?
+
+- From PyPi, with the instructions found [here](https://epigenica.github.io/dds_cli/installation_epigenica/#install-from-pypi).
+  - Please download the executable, following the instructions, and try running the same command again (but with the executable).
+- I downloaded the executable as instructed [here](https://epigenica.github.io/dds_cli/installation_epigenica/#install-via-the-executable).
+  - Inform Epigenica support.
+
+Depending on your level of experience with Stack Overflow and the command line, [this comment](https://stackoverflow.com/a/20950421)
+could potentially help you to solve the issue.
+
+## S. The download is interrupted
+
+### 1. Are you attempting to download the data within Sweden?
+
+- Yes, I'm in Sweden: Move on to 2.
+- No, I'm not in Sweden: The DDS uploads data to a cloud service located within the Swedish borders. Downloading data
+  overseas is most likely slower, however it should work. Verify that your internet connection is stable. Note that
+  downloading data via a hotel WiFi connection a) is not recommended, and b) will most likely not be permitted due to hotel
+  WiFi limits.
+
+### 2. Have you checked that you have enough storage space available in the location you're attempting to download the data?
+
+- Yes, I have enough space: Move on to 3.
+- No: Please make sure you have enough storage space available.
+
+### 3. Contact the Epigenica unit delivering your data.
+
+## T. "No data specified"
+
+This message is displayed when you have not specified what data to download. In order to download data from your project,
+you need to use one of the following options:
+
+`--source`/`–s`: Downloads a specific file or directory. You can use this option multiple times to specify separate
+files or directories.
+
+`--get-all`/`–a`: Downloads the entire content of the project.
+
+# Epigenica Support
+
+## A. Invitation link invalid
+
+Ask them to follow the instructions in the Invitation link invalid section in the User part of this document.
+Unit Admins/Personnel can also run the following commands:
+
+- Delete the invite if it exists: `dds user delete --is-invite`. If they are experiencing issues with this, we as
+  Super Admins can also do this.
+- Invite them again. Super Admins should not be doing this.
+
+## B. Too many authentication requests in one hour
+
+If this message is displayed in the web interface or CLI, the user has attempted to log in or logged in and out more
+than 10 times within an hour. Ask the user to wait for an hour and try again later.
+
+## C. Web: Invalid username or password
+
+If a user cannot log in to the web interface, ask them to follow the steps in [C above](#c.-web-invalid-username-or-password).
+If they have already done this, check that they have provided all the information listed [here](https://dds.epigenica.se/trouble).
+
+A possibility is that the web is not letting them in because they have attempted to log in more than 10 times in an hour.
+If that's the case, tell them to try again later. If it's not the case, there's not much you can do. Offer to delete their
+account and invite them again. It's better if a Unit Admin or Personnel handles the new invite, but if you do, remember
+that you cannot invite Researchers to specific projects, only to the DDS in general and that you need to specify the unit
+public ID if you want to invite a Unit Personnel or Admin. However, if there are active projects in the unit, they will
+still not have access, so they still need to ask someone within their unit with access to the projects, for renewal of
+the project access.
+
+## D. CLI: Failed to authenticate user: Missing or incorrect credentials
+
+Follow the same steps as in [the above C](#c.-web-invalid-username-or-password-1) above.
+
+## E. Not receiving emails
+
+Check the information in the User section earlier in the document regarding this specific topic. If they contact us,
+the email is correct and it's not an email address connected to the KI spam filter, create a card in the issue tracker.
+
+## F. CLI Documentation not accessible
+
+1. Notify the users that they can download the CLI documentation as a PDF from [here](https://github.com/Epigenica/dds_cli/releases/latest/download/dds_cli_user_manual.pdf)
+2. Investigate the issue, including whether it could be infrastructure-related.
+
+## G. Long error message (traceback)
+
+1. Make sure they have upgraded the CLI to the latest version. If they have, or the upgrade does not help, move on to 2.
+2. Make sure they have provided the information listed [here](https://dds.epigenica.se/trouble).
+3. Look through the traceback. There could be some uncaught error or similar in the CLI, most often this is not caused
+   by the backend, and most likely this is not something that can wait. If that's the case, create a card in the issue tracker.
+
+## H. Token expires during delivery
+
+We cannot do anything about this. It's on the todo list.
+
+## I. Windows OS: Warning message "Storing the login information locally - please ensure no one else can access the file at …"
+
+Since the token file permissions check does not work on Windows OS, we are warning the users to be extra cautious in
+keeping this file secure. The dds client should be fully functional despite this warning.
+
+## J. Permission denied (authentication token) when using the DDS on a func account or similar
+
+### Basic information
+
+- The default setting is that the authenticated token generated by `dds auth login` has permission 600. This means read
+  and write permissions for the specific unix user that is running the command.
+- Running the `dds auth login` command with the option `--allow-group` will allow users from the same unix group to use
+  the resulting token file.
+- The permissions of tokens cannot be changed after the tokens are established. If you began an authenticated session
+  without the use of the `--allow-group option`, but want to use it in a new session, use `dds auth logout` to end the
+  current session. Then use the `--allow-group option` and start a new session. This also applies to the reverse.
+- Not recommended for users with role Researcher, use with care.
+- As long as the `dds auth login` command works without the additional permissions option, that is what the users will
+- have to work with for now.
+
+### Background / additional information:
+
+The default setting is that the authenticated token generated by `dds auth login` has permission 600. Because of issues
+with func accounts, the option `--allow-group` was added as a flag to `dds auth login` so that a func account can use
+the authenticated token for deliveries with the DDS. The permissions are set to 640: `-rw-r-----` (read and write
+permissions for the user running the command, and only read permission for a group).
+
+## K. QuotaExceeded
+
+The error could end with something like this:
+
+```
+raise error_class(parsed_response, operation_name)
+
+         botocore.exceptions.ClientError: An error occurred (QuotaExceeded) when calling the UploadPart operation: Unknown
+```
+
+- Check with the user which unit they have an account within and the size of the data they are attempting to upload.
+- Contact Safespring and ask them to increase the quota for the specific project.
+- When the quota has been changed, inform the users that they can try the upload again.
+
+## L. Unrecoverable key error
+
+The most likely reason for a key related error is that the user does not have access to the project they are trying to
+access, and that there is an uncaught error somewhere.
+
+1. Ask the user to perform the steps in the corresponding user section. If they have done this, check if the user is
+   active or not first: `dds user ls`.
+2. Ask them to run the commands as specified in the Unrecoverable key error section earlier in the document and for them
+   to send you the output of those commands.
+3. Ask them to create a new project and to do the same command with that one. If it works, the issue is with that specific
+   project and this should be reported as a bug.
+
+## M. ERROR: Internal Server Error
+
+The most likely reason for an Internal Server Error is an uncaught exception in the backend, often something database
+related. If someone contacts you regarding an Internal Server Error, begin with making sure they have provided the
+information mentioned [here](https://dds.epigenica.se/trouble). When they have done this, look through the traceback.
+
+## N. TooManyBuckets
+
+Safespring has a maximum number of buckets per unit, however this number is set quite high and therefore this should
+not happen. If it does happen, contact Safespring and ask them to increase the number of allowed buckets in the affected
+Safespring project. After this, the users can attempt creating a project again.
+
+## O. Errors occurred during upload
+
+The message from the CLI could be something like this:
+
+```
+Errors occurred during upload.
+If you wish to retry the upload, re-run the `dds data put` command again, specifying the same options as you did now. To also overwrite the files that were uploaded, also add the `--overwrite` flag at the end of the command.
+
+
+See /code/DataDelivery_2022-06-30_14-17-18/logs/dds_failed_delivery.json for more information.
+```
+
+If a user contacts us with an upload issue that has generated the aforementioned file, do the following:
+
+1. Ask them to send the exact CLI command that they ran
+2. Get the JSON file.
+3. Download that file and run the following command in the cluster, in the DDS backend:
+   `flask update-uploaded-file` while specifying the project and the path to the file as options.
+
+## P. Not possible to change project status (Deadlock)
+
+Ask the user to check the project status if they haven't already, it may be the status they were trying to change to.
+Otherwise, ask them to wait for a bit and then try again.
+
+## Q. Lost access to 2FA Authenticator App
+
+Another Super Admin can deactivate the configuration in order to let the user authenticate using the default email
+option. Super Admins can also do this for other account roles.
+
+Run the following command:
+
+`dds auth twofactor deactivate`
+
+## R. Windows: DDS freezes after message
+
+Ask them to follow the corresponding User section of this document. If they have done that already and it does not help,
+there's nothing we can do. Usually it works if they use the executable instead of the CLI installed via PyPi.
+
+## S. The download is interrupted
+
+All cases reported so far have not been connected to the DDS specifically. It's most likely due to a network issue or
+lack of storage space as described in the corresponding section in the User section.
+
+## T. "No data specified"
+
+The user has not specified what they wish to download. Make sure that the user has specified either `--source`/`–s`
+or `--get-all`/`–a` as described in the user section.

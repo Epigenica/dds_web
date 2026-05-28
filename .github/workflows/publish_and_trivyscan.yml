@@ -83,7 +83,7 @@ jobs:
             updmap-sys &&
             pandoc
             --output=dds_web/static/dds-troubleshooting.pdf
-            docs/troubleshooting.md
+            docs/troubleshooting_epigenica.md
             "
       - name: Upload troubleshooting PDF
         uses: actions/upload-artifact@v7
