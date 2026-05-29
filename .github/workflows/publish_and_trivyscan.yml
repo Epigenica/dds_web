@@ -124,7 +124,7 @@ jobs:
       - name: Extract dds_web version
         id: dds_version
         run: |
-          VERSION=$(python -c "import sys; sys.path.insert(0, '.'); from dds_web.version import __version__; print(__version__)")
+          VERSION=$(grep -Po '(?<=__version__ = ")[^"]+' dds_web/version.py)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Docker metadata
