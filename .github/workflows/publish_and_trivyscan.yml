@@ -121,12 +121,23 @@ jobs:
         with:
           name: troubleshooting-pdf
           path: dds_web/static
+      - name: Extract dds_web version
+        id: dds_version
+        run: |
+          VERSION=$(python -c "import sys; sys.path.insert(0, '.'); from dds_web.version import __version__; print(__version__)")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Docker metadata
         id: meta
         uses: docker/metadata-action@v6
         with:
           images: |
             ghcr.io/epigenica/dds-backend
+          tags: |
+            type=raw,value=${{ steps.dds_version.outputs.version }},enable=${{ github.ref_name == 'dev' }}
+            type=ref,event=branch,enable=${{ github.ref_name != 'dev' }}
+            type=ref,event=tag
+            type=sha
       - name: Ensure lowercase name
         run: echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
       - name: Build for scan
@@ -159,6 +170,6 @@ jobs:
           file: Dockerfiles/backend.Dockerfile
           context: .
           push: true
-          build-args: version=${{ github.ref_name }}
+          build-args: version=${{ steps.dds_version.outputs.version }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
