@@ -10,7 +10,7 @@ To list the files in this project, run:
 To download all the files in this project to your current directory, run:
     dds data get -p {{project_id}} -a --verify-checksum.
 
-For more information (including an installation guide), see the DDS CLI documentation here: https://scilifelabdatacentre.github.io/dds_cli/
+For more information (including an installation guide), see the DDS CLI documentation here: https://epigenica.github.io/dds_cli/
 
 {% if unit_email %}
 If you experience issues, please contact {{displayed_sender}} at {{unit_email}}.
