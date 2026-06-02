@@ -44,11 +44,11 @@ than 10 times within an hour. Please wait an hour and try again.
   - Researcher: Contact the Epigenica unit that invited you to the DDS.
     - Question for the Unit Admins / Personnel: Is the account connected to a project within the DDS?
       - Yes: A Unit Admin or Unit Personnel role can list the researchers in a specific project: `dds ls --project --users`. They can then check the table for the user and find the correct username.
-      - No: The Unit Admin or Personnel should contact [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+      - No: The Unit Admin or Personnel should contact [data.team@epigenica.se](mailto:data.team@epigenica.se).
 
 ### 2. Are you sure you are using the correct password?
 
-- Yes: Notify Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+- Yes: Notify Epigenica support at [data.team@epigenica.se](mailto:data.team@epigenica.se).
 - No: Try requesting a password reset in the web interface.
 
 - IMPORTANT: If you have access to any projects before the password reset, notify an Unit Admin or Unit Personnel
@@ -72,7 +72,7 @@ If you have an email that you are certain does not go through the KI spam filter
 - Verify that you are checking the correct email address
 - Check the junk folder
 
-If you cannot find the email, contact Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+If you cannot find the email, contact Epigenica support at [data.team@epigenica.se](mailto:data.team@epigenica.se).
 
 ## F. CLI Documentation not accessible
 
@@ -83,7 +83,7 @@ into it.
 
 If you get a long error message after running the CLI:
 
-- Unit Personnel / Admins: Report this to [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se).
+- Unit Personnel / Admins: Report this to [data.team@epigenica.se](mailto:data.team@epigenica.se).
 - Researchers: Report this to the Epigenica unit delivering the data.
 
 Include the error message in the email. If the error is related to the DDS, an understandable message should always be
@@ -124,7 +124,7 @@ raise error_class(parsed_response, operation_name)
 ```
 
 This indicates that the cloud storage location has a specific limit for your unit and that it has been exceeded.
-Contact Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se), inform them of the error (remember to include the full error
+Contact Epigenica support at [data.team@epigenica.se](mailto:data.team@epigenica.se), inform them of the error (remember to include the full error
 message) and tell them the size of the data you are attempting to upload.
 
 ## L. Unrecoverable key error
@@ -157,7 +157,7 @@ steps:
 
 ## M. ERROR: Internal Server Error
 
-Contact [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se) and provide the information listed [here](https://dds.epigenica.se/trouble).
+Contact [data.team@epigenica.se](mailto:data.team@epigenica.se) and provide the information listed [here](https://dds.epigenica.se/trouble).
 
 ## N. TooManyBuckets
 
@@ -194,7 +194,7 @@ lost access to it (e.g. due to a broken or lost device), Epigenica support can d
 let you authenticate using the default email option. After this you can choose to activate the authenticator app method
 again.
 
-Please contact Epigenica support at [nima.rafati@epigenica.se](mailto:nima.rafati@epigenica.se) and ask for a reset of the 2FA method; complement the request with the username
+Please contact Epigenica support at [data.team@epigenica.se](mailto:data.team@epigenica.se) and ask for a reset of the 2FA method; complement the request with the username
 and email address of the affected account.
 
 ## R. Windows: DDS freezes after message
