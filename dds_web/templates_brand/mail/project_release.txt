@@ -20,4 +20,22 @@ If you experience issues, please contact {{displayed_sender}}.
 
 Your access to this project will expire on {{deadline}}
 
+Before downloading, a few things to check:
+
+- Stable internet connection required. If you're on a system with an inactivity
+  timeout, adjust the settings so it doesn't hibernate or disconnect if the
+  connection stalls.
+- The destination folder must not already exist — dds data get will refuse to
+  download into a folder that's already there. Choose a new folder name.
+- Check available disk space before starting. You can check the size of the
+  data with:
+      dds ls --size -p {{project_id}}
+  (flag pending verification — confirm with `dds ls --help` before relying on this)
+  Downloads cannot be resumed if interrupted — a failed download must restart
+  from scratch.
+- Re-authenticate before downloading if you're unsure your session is still
+  valid. Session tokens are valid for 7 days; if it expires mid-download, the
+  download will fail and must restart from scratch. Run:
+      dds auth login
+
 What is the DDS? The DDS is a system for Epigenica to deliver data to researchers in a fast, secure and simple way.
