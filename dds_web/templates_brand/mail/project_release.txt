@@ -22,7 +22,7 @@ Your access to this project will expire on {{deadline}}
 
 Before downloading, a few things to check:
 
-- Stable internet connection required. If you're on a system with an inactivity
+- Stable internet connection is required. If you're on a system with an inactivity
   timeout, adjust the settings so it doesn't hibernate or disconnect if the
   connection stalls.
 - The destination folder must not already exist — dds data get will refuse to
